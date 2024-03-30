@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'authorization.User'
 
 # Application definition
 
@@ -37,7 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'movies',
+
+    'rest_framework',
+    'django_extensions',
+
+    'movies.apps.MoviesConfig',
+    'authorization.apps.AuthorizationConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +132,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGIN_URL = 'login'

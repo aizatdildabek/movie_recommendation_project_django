@@ -1,8 +1,8 @@
 from django.db import models
-
-# Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+# Create your models here.
 
 class Producer(models.Model):
     name = models.CharField(max_length=100)
@@ -20,7 +20,8 @@ class Genre(models.Model):
         return self.name
 
 class UserPreference(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
     
@@ -52,7 +53,7 @@ class Rating(models.Model):
         return f'{self.movie} - {self.rating}'
 
 class UserRating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     rating = models.FloatField()
     
