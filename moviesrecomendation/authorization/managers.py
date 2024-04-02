@@ -7,7 +7,6 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.role = role
         user.save(using=self._db)
-
         return user
 
 
