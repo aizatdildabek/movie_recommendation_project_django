@@ -1,0 +1,27 @@
+<!-- movie_detail.html -->
+<!-- movie_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Detail</title>
+</head>
+<body>
+    <h1>Movie Detail</h1>
+    <p>Title: {{ movie.title }}</p>
+    <p>Producer: {{ movie.producer }}</p>
+    <p>Release Year: {{ movie.release_year }}</p>
+    
+    <a href="{% url 'update' pk=movie.pk %}"><button type="submit">Update</button></a>
+    <form action="{% url 'delete' pk=movie.pk %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="delete">
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>
+
+
+def movie_detail(request, pk):
+    movie = Movie.objects.get(pk=pk)
+    return render(request, 'movies/movie_detail.html',{'movie': movie})

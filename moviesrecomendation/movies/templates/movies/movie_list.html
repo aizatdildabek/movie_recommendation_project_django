@@ -1,0 +1,39 @@
+<!-- movie_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie List</title>
+</head>
+<body>
+    <h1>Movie List</h1>
+    <ul>
+        {% for data in movie_data %}
+        <li>
+            <h2>{{ data.movie.title }}</h2>
+            <p>Average Rating: {{ data.average_rating }}</p>
+            <ul>
+                {% for rating in data.user_ratings %}
+                <li>{{ rating.user.username }}: {{ rating.rating }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+
+def movie_list(request):
+    movies = Movie.objects.all()
+    movie_data = []
+    for movie in movies:
+        ratings = UserRating.objects.filter(movie=movie)
+        average_rating = ratings.aggregate(avg_rating=Avg('rating'))['avg_rating']
+        movie_data.append({
+            'movie': movie,
+            'average_rating': average_rating,
+            'user_ratings': ratings
+        })
+    return render(request, 'movie_list.html', {'movie_data': movie_data})

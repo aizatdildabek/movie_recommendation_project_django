@@ -24,6 +24,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True) #юзер активен или нет, поум - да
     is_staff = models.BooleanField(default=False) #есть ли доступ к админ панели, фолс - доступ нет
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
     
     objects = UserManager()
     
